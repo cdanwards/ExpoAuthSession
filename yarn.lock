@@ -4074,7 +4074,7 @@ expo-random@~13.1.1:
   dependencies:
     base64-js "^1.3.0"
 
-expo-web-browser@~12.1.0:
+expo-web-browser@~12.1.0, expo-web-browser@~12.1.1:
   version "12.1.1"
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-12.1.1.tgz#b2c9ce26b82ea62b12041d8201bfeb21d27fc528"
   integrity sha512-QdFnJKCKzWrvTIjFL2Yb6SlfyJWfBw1S1ceRyGtQSp4p7WFsvfbR6oJyucF04SJD7GshBluIlchrQK7XH/4EWQ==
