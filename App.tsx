@@ -33,6 +33,8 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+WebBrowser.maybeCompleteAuthSession();
+
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -60,6 +62,8 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
+  const [accessToken, setAccessToken] = React.useState<string | null>(null);
+  const [userInfo, setUserInfo] = React.useState<any>(null);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
