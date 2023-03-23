@@ -1,4 +1,19 @@
 {
   "name": "TestExpo",
-  "displayName": "TestExpo"
+  "displayName": "TestExpo",
+  "extra": {
+    "eas": {
+      "projectId": "5900f154-4f30-4cdb-88ec-712ff2ad2e9c"
+    }
+  },
+  "expo": {
+    "ios": {
+      "bundleIdentifier": "org.reactjs.native.example.TestExpo"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5900f154-4f30-4cdb-88ec-712ff2ad2e9c"
+      }
+    }
+  }
 }

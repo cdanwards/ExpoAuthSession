@@ -62,8 +62,54 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
-  const [accessToken, setAccessToken] = React.useState<string | null>(null);
-  const [userInfo, setUserInfo] = React.useState<any>(null);
+  const [accessToken, setAccessToken] = React.useState();
+  const [userInfo, setUserInfo] = React.useState();
+
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    androidClientId:
+      '833805328094-tdcrc54rbsn7e64v62mmc4pifn0ipm1s.apps.googleusercontent.com',
+    iosClientId:
+      '833805328094-nkfje5g03al371h2u31v6laq1qkiio34.apps.googleusercontent.com',
+    expoClientId:
+      '833805328094-8k6ieqi9vgpadslfou3ptll84a7sebkq.apps.googleusercontent.com',
+  });
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      // const {id_token} = response.authentication?.accessToken;
+      setAccessToken(response?.authentication?.accessToken);
+    }
+  }, [response]);
+
+  async function getUserData() {
+    let userInfoResponse = await fetch(
+      'https://www.googleapis.com/userinfo/v2/me',
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    userInfoResponse.json().then(data => {
+      setUserInfo(data);
+    });
+  }
+
+  function showUserInfo() {
+    if (userInfo) {
+      return (
+        <View>
+          <Image
+            source={{uri: userInfo.picture}}
+            style={{width: 100, height: 100}}
+          />
+          <Text>Welcome {userInfo.name}</Text>
+          <Text>{userInfo.email}</Text>
+        </View>
+      );
+    }
+  }
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -84,20 +130,17 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Button
+            title={accessToken ? 'Get User Data' : 'Login'}
+            onPress={
+              accessToken
+                ? getUserData
+                : () => {
+                    promptAsync({showInRecents: true});
+                  }
+            }
+          />
+          {showUserInfo()}
         </View>
       </ScrollView>
     </SafeAreaView>
