@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Linking,
   Text,
   useColorScheme,
   View,
@@ -36,8 +37,11 @@ function App(): JSX.Element {
       '833805328094-8k6ieqi9vgpadslfou3ptll84a7sebkq.apps.googleusercontent.com',
   });
 
+  // test
+
   React.useEffect(() => {
     if (response?.type === 'success') {
+      console.log('requestr', request);
       // const {id_token} = response.authentication?.accessToken;
       setAccessToken(response?.authentication?.accessToken);
     }
